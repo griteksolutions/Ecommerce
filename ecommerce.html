@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico E-Commerce · Gritek Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0a0a0a;--card:#161616;--card2:#1a1a1a;--mid:#2563EB;--gold:#F59E0B;--gold2:#FBBF24;--slate:#94A3B8;--bdr:rgba(255,255,255,.08);--white:#FFFFFF;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(245,158,11,.15);}
+  .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:.5px;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px;}
+  .nav-logo span{display:inline-block;width:8px;height:8px;background:var(--gold);border-radius:50%;}
+  .nav-links{display:flex;gap:32px;align-items:center;}
+  .nav-links a{font-size:13px;font-weight:500;color:var(--slate);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{background:var(--gold)!important;color:#0a0a0a!important;padding:8px 20px;border-radius:6px;font-weight:700!important;font-size:13px!important;transition:background .2s!important;}
+  .nav-cta:hover{background:var(--gold2)!important;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.3)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .form-hero{position:relative;z-index:1;padding:110px 40px 0;max-width:800px;margin:0 auto;text-align:center;}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--gold);letter-spacing:.5px;margin-bottom:22px;animation:fadeUp .5s ease both;}
+  .hero-tag::before{content:'';width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+  .form-hero h1{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:14px;animation:fadeUp .6s .1s ease both;}
+  .form-hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .form-hero p{font-size:16px;font-weight:300;color:var(--slate);line-height:1.7;max-width:520px;margin:0 auto 40px;animation:fadeUp .6s .2s ease both;}
+  .progress-wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 40px;animation:fadeUp .6s .3s ease both;}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--slate);margin-bottom:8px;font-weight:500;}
+  .progress-label span:last-child{color:var(--gold);font-weight:700;}
+  .progress-track{height:3px;background:rgba(255,255,255,.08);border-radius:3px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--mid),var(--gold));border-radius:3px;width:0%;transition:width .4s ease;}
+  .form-wrapper{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:28px 40px 100px;}
+  .datos-card{background:var(--card);border:1px solid rgba(245,158,11,.2);border-radius:12px;overflow:hidden;margin-bottom:16px;}
+  .card-header{display:flex;align-items:center;gap:10px;padding:14px 20px;background:rgba(245,158,11,.07);border-bottom:1px solid rgba(245,158,11,.12);}
+  .card-num{background:var(--gold);color:#0a0a0a;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.5px;}
+  .card-header h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--white);}
+  .card-body{padding:20px 20px 16px;}
+  .datos-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .seccion{background:var(--card);border:1px solid var(--bdr);border-radius:12px;overflow:hidden;margin-bottom:16px;transition:border-color .2s;}
+  .seccion:focus-within{border-color:rgba(37,99,235,.35);}
+  .sec-header{display:flex;align-items:center;gap:10px;padding:13px 20px;background:var(--card2);border-bottom:1px solid var(--bdr);}
+  .sec-num{background:var(--mid);color:white;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;padding:3px 10px;border-radius:20px;}
+  .sec-header h3{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:var(--white);}
+  .sec-body{padding:18px 20px 12px;}
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:4px;}
+  .field label{display:block;font-size:13px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:7px;line-height:1.4;}
+  .field label .hint{display:block;font-size:11.5px;font-weight:400;color:var(--slate);margin-top:2px;}
+  .field input,.field textarea,.field select{width:100%;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;transition:border-color .2s,background .2s,box-shadow .2s;resize:vertical;-webkit-appearance:none;}
+  .field input::placeholder,.field textarea::placeholder{color:rgba(255,255,255,.2);}
+  .field select option{background:#1a1a1a;color:var(--white);}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--gold);background:rgba(245,158,11,.05);box-shadow:0 0 0 3px rgba(245,158,11,.1);}
+  .field textarea{min-height:78px;}
+  .field input[readonly]{border-color:rgba(245,158,11,.3);color:var(--gold);background:rgba(245,158,11,.05);font-weight:600;cursor:default;}
+  .notas-card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:28px;}
+  .notas-card label{display:block;font-size:13px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:8px;}
+  .notas-card textarea{width:100%;padding:10px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;min-height:90px;resize:vertical;}
+  .notas-card textarea::placeholder{color:rgba(255,255,255,.2);}
+  .notas-card textarea:focus{outline:none;border-color:var(--gold);background:rgba(245,158,11,.05);box-shadow:0 0 0 3px rgba(245,158,11,.1);}
+  .btn-submit{width:100%;padding:16px;background:var(--gold);color:#0a0a0a;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;letter-spacing:.3px;cursor:pointer;transition:background .2s,transform .1s,box-shadow .2s;box-shadow:0 4px 20px rgba(245,158,11,.25);}
+  .btn-submit:hover{background:var(--gold2);box-shadow:0 8px 30px rgba(245,158,11,.35);transform:translateY(-1px);}
+  .btn-submit:active{transform:scale(.99);}
+  .btn-submit:disabled{background:rgba(255,255,255,.1);color:rgba(255,255,255,.3);cursor:not-allowed;box-shadow:none;transform:none;}
+  .privacy{font-size:12px;color:var(--slate);text-align:center;margin-top:12px;line-height:1.5;}
+  #estadoCard{display:none;position:relative;z-index:1;max-width:800px;margin:120px auto 80px;padding:0 40px;text-align:center;}
+  #estadoCard.visible{display:block;}
+  .estado-inner{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:60px 40px;}
+  .estado-icon{font-size:64px;margin-bottom:20px;}
+  #estadoCard h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--white);margin-bottom:12px;}
+  #estadoCard p{font-size:15px;color:var(--slate);line-height:1.7;}
+  #estadoCard.exito .estado-inner{border-color:rgba(245,158,11,.3);}
+  #estadoCard.error .estado-inner{border-color:rgba(220,38,38,.3);}
+  #estadoCard.error h2{color:#FCA5A5;}
+  footer{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.06);padding:24px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--slate);max-width:1100px;margin:0 auto;}
+  @media(max-width:600px){nav{padding:0 20px;}.nav-links{display:none;}.form-hero,.progress-wrap,.form-wrapper{padding-left:20px;padding-right:20px;}.datos-grid{grid-template-columns:1fr;}#estadoCard{padding:0 20px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="https://griteksolutions.github.io/erp-pdm">
+    <span></span> Gritek
+  </a>
+  <div class="nav-links">
+    <a href="https://griteksolutions.github.io/#servicios">Servicios</a>
+    <a href="https://griteksolutions.github.io/#contacto">Contacto</a>
+    <a href="diagnostico.html" class="nav-cta">Diagnóstico ERP →</a>
+  </div>
+</nav>
+
+<div class="form-hero">
+  <div class="hero-tag" id="clientBadge">Diagnóstico E-Commerce</div>
+  <h1>Tu tienda en línea,<br>tu <em>propio canal</em></h1>
+  <p>Responde este diagnóstico para entender cómo llevar tu operación de Mercado Libre y Amazon a tu propia tienda digital.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label"><span>Progreso del cuestionario</span><span id="progressPct">0%</span></div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<div class="form-wrapper" id="formCard">
+<form id="mainForm">
+
+  <!-- INFO -->
+  <div class="datos-card">
+    <div class="card-header"><span class="card-num">INFO</span><h3>Datos del Prospecto</h3></div>
+    <div class="card-body">
+      <div class="datos-grid">
+        <div class="field"><label>Empresa / Negocio *</label><input type="text" name="empresa" id="inputEmpresa" required placeholder="Nombre de tu negocio"></div>
+        <div class="field"><label>Nombre del Contacto *</label><input type="text" name="contacto" required placeholder="Tu nombre completo"></div>
+        <div class="field"><label>Correo Electrónico</label><input type="email" name="correo" placeholder="correo@negocio.com"></div>
+        <div class="field"><label>Teléfono / WhatsApp</label><input type="tel" name="telefono" placeholder="(81) 0000-0000"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 01 Canales actuales -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">01</span><h3>Canales de Venta Actuales</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿En qué plataformas venden hoy?<span class="hint">Puedes seleccionar la principal o escribir todas</span></label>
+        <select name="q1_1"><option value="">— Selecciona —</option><option>Solo Mercado Libre</option><option>Solo Amazon</option><option>Mercado Libre y Amazon</option><option>ML, Amazon y otros canales</option><option>Todavía no vendo en línea</option></select>
+      </div>
+      <div class="field"><label>¿Cuántas ventas mensuales aproximadas tienen en total?</label>
+        <select name="q1_2"><option value="">— Selecciona —</option><option>Menos de 50 pedidos/mes</option><option>50 – 200 pedidos/mes</option><option>200 – 500 pedidos/mes</option><option>Más de 500 pedidos/mes</option></select>
+      </div>
+      <div class="field"><label>¿Cuál es su ticket promedio de venta?</label>
+        <select name="q1_3"><option value="">— Selecciona —</option><option>Menos de $300 MXN</option><option>$300 – $1,000 MXN</option><option>$1,000 – $5,000 MXN</option><option>Más de $5,000 MXN</option></select>
+      </div>
+      <div class="field"><label>¿Cuál es su principal problema con los canales actuales (ML / Amazon)?<span class="hint">Ej: comisiones altas, competencia de precio, no pueden hacer marca propia...</span></label>
+        <textarea name="q1_4" placeholder="Describe los dolores más grandes con ML/Amazon"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Catálogo -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">02</span><h3>Catálogo y Productos</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Cuántos productos (SKUs) tienen en su catálogo?</label>
+        <select name="q2_1"><option value="">— Selecciona —</option><option>Menos de 20</option><option>20 – 100</option><option>100 – 500</option><option>Más de 500</option></select>
+      </div>
+      <div class="field"><label>¿Sus productos tienen variantes?<span class="hint">Ej: talla, color, modelo, capacidad...</span></label>
+        <select name="q2_2"><option value="">— Selecciona —</option><option>Sí, la mayoría tiene variantes</option><option>Algunos tienen variantes</option><option>No, cada producto es único</option></select>
+      </div>
+      <div class="field"><label>¿Tienen fotos profesionales de sus productos?</label>
+        <select name="q2_3"><option value="">— Selecciona —</option><option>Sí, tenemos fotos de calidad</option><option>Solo las que usamos en ML/Amazon</option><option>No, habría que tomarlas</option></select>
+      </div>
+      <div class="field"><label>¿Actualizan precios frecuentemente?<span class="hint">Ej: promociones, temporadas, respuesta a competencia</span></label>
+        <select name="q2_4"><option value="">— Selecciona —</option><option>Sí, muy frecuente (semanal o más)</option><option>Ocasionalmente (mensual)</option><option>Raramente</option></select>
+      </div>
+      <div class="field"><label>¿Tienen productos de fabricación propia, reventa o ambos?</label>
+        <select name="q2_5"><option value="">— Selecciona —</option><option>Fabricación propia / marca propia</option><option>Reventa de otras marcas</option><option>Combinación de ambos</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Inventario -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">03</span><h3>Inventario y Bodega</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Cómo manejan su inventario hoy?</label>
+        <select name="q3_1"><option value="">— Selecciona —</option><option>Excel o cuaderno manual</option><option>El mismo ML/Amazon lo controla</option><option>Tenemos un sistema propio</option><option>No llevamos control formal</option></select>
+      </div>
+      <div class="field"><label>¿Tienen bodega propia o hacen dropshipping?</label>
+        <select name="q3_2"><option value="">— Selecciona —</option><option>Bodega propia</option><option>Dropshipping (proveedor envía directo)</option><option>Combinación de ambos</option><option>Usamos MELI Fulfillment / FBA</option></select>
+      </div>
+      <div class="field"><label>¿Es importante que la tienda propia muestre stock en tiempo real?</label>
+        <select name="q3_3"><option value="">— Selecciona —</option><option>Sí, necesitamos inventario unificado entre canales (requiere integración adicional)</option><option>Deseable pero no urgente</option><option>No es prioridad</option></select>
+      </div>
+      <div class="field"><label>¿Con cuántos proveedores trabajan?</label>
+        <select name="q3_4"><option value="">— Selecciona —</option><option>1 – 3 proveedores</option><option>4 – 10 proveedores</option><option>Más de 10</option><option>Somos el propio fabricante</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 Pagos y Facturación -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">04</span><h3>Pagos y Facturación</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Qué métodos de pago quieren ofrecer en la tienda propia?<span class="hint">Selecciona los más importantes</span></label>
+        <select name="q4_1"><option value="">— Selecciona —</option><option>MercadoPago (tarjeta + meses sin intereses)</option><option>Stripe (tarjeta internacional)</option><option>Ambos</option><option>También OXXO / efectivo</option><option>También transferencia / SPEI</option></select>
+      </div>
+      <div class="field"><label>¿Necesitan emitir facturas fiscales (CFDI) automáticamente al comprar?</label>
+        <select name="q4_2"><option value="">— Selecciona —</option><option>Sí, obligatorio para clientes empresariales</option><option>Solo cuando el cliente lo solicita</option><option>No es necesario por ahora</option></select>
+      </div>
+      <div class="field"><label>¿Quieren ofrecer meses sin intereses?</label>
+        <select name="q4_3"><option value="">— Selecciona —</option><option>Sí, es importante para nuestro ticket</option><option>Sería deseable</option><option>No es prioridad</option></select>
+      </div>
+      <div class="field"><label>¿Venden a empresas (B2B) además de consumidor final (B2C)?</label>
+        <select name="q4_4"><option value="">— Selecciona —</option><option>Solo B2C (consumidor final)</option><option>Principalmente B2C con algo de B2B</option><option>Ambos por igual</option><option>Principalmente B2B</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 Envíos y Logística -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">05</span><h3>Envíos y Logística</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Qué paqueterías usan o prefieren?<span class="hint">Ej: Estafeta, DHL, FedEx, Mercado Envíos, J&T...</span></label>
+        <input type="text" name="q5_1" placeholder="Escribe las paqueterías que usan actualmente">
+      </div>
+      <div class="field"><label>¿Quieren cotizador de envío automático en la tienda?</label>
+        <select name="q5_2"><option value="">— Selecciona —</option><option>Sí, el cliente elige paquetería y ve el costo</option><option>Precio de envío fijo para todos</option><option>Envío gratis en todos los pedidos</option><option>Envío gratis a partir de cierto monto</option></select>
+      </div>
+      <div class="field"><label>¿Hacen envíos a toda la república o solo ciertas zonas?</label>
+        <select name="q5_3"><option value="">— Selecciona —</option><option>Toda la república mexicana</option><option>Solo ciertas ciudades o estados</option><option>También envíos internacionales</option></select>
+      </div>
+      <div class="field"><label>¿Cuánto tiempo tarda actualmente en surtir y enviar un pedido?</label>
+        <select name="q5_4"><option value="">— Selecciona —</option><option>Mismo día</option><option>1 – 2 días hábiles</option><option>3 – 5 días hábiles</option><option>Más de 5 días</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 Sincronización ML/Amazon -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">06</span><h3>Sincronización con ML / Amazon</h3></div>
+    <div class="sec-body">
+      <div style="background:rgba(245,158,11,.07);border-left:3px solid #F59E0B;border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:12.5px;color:#94A3B8;line-height:1.6;"><b style="color:#F59E0B;">Nota:</b> La sincronización con Mercado Libre es posible vía API propia. Amazon requiere herramienta de tercero (costo de licencia adicional). Sincronización multicanal total es un proyecto extendido.</div>
+      <div class="field"><label>¿Quieren que la tienda propia esté sincronizada con ML/Amazon en inventario y precios?</label>
+        <select name="q6_1"><option value="">— Selecciona —</option><option>Solo con Mercado Libre (vía API — incluido en propuesta)</option><option>Solo con Amazon (requiere herramienta de tercero)</option><option>Con ambos ML y Amazon (proyecto extendido)</option><option>No, la tienda propia es un canal independiente</option><option>No lo sé aún</option></select>
+      </div>
+      <div class="field"><label>¿Tienen cuenta de vendedor en ML con muchas publicaciones activas?</label>
+        <select name="q6_2"><option value="">— Selecciona —</option><option>Sí, más de 50 publicaciones activas</option><option>Entre 10 y 50</option><option>Menos de 10</option></select>
+      </div>
+      <div class="field"><label>¿Prefieren manejar precios diferentes en cada canal?<span class="hint">Ej: precio más bajo en tienda propia para incentivar compra directa</span></label>
+        <select name="q6_3"><option value="">— Selecciona —</option><option>Sí, precio diferente por canal</option><option>No, mismo precio en todos lados</option><option>No lo hemos pensado</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 Marketing y Clientes -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">07</span><h3>Marketing y Base de Clientes</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Tienen base de datos de clientes hoy?<span class="hint">Los compradores de ML/Amazon son anónimos — la tienda propia te da los datos</span></label>
+        <select name="q7_1"><option value="">— Selecciona —</option><option>No, ese es uno de los motivos de tener tienda propia</option><option>Sí, tenemos algunos datos de clientes</option><option>Sí, tenemos base de clientes bien estructurada</option></select>
+      </div>
+      <div class="field"><label>¿Tienen redes sociales activas desde donde llegan ventas?<span class="hint">Ej: Instagram Shop, Facebook, TikTok...</span></label>
+        <input type="text" name="q7_2" placeholder="Ej: Instagram con 10k seguidores, TikTok activo...">
+      </div>
+      <div class="field"><label>¿Les interesa tener cupones de descuento o promociones en la tienda?</label>
+        <select name="q7_3"><option value="">— Selecciona —</option><option>Sí, es importante para nuestras campañas</option><option>Ocasionalmente</option><option>No es prioridad</option></select>
+      </div>
+      <div class="field"><label>¿Les interesa email marketing o notificaciones a clientes?<span class="hint">Ej: carritos abandonados, promociones, recompra</span></label>
+        <select name="q7_4"><option value="">— Selecciona —</option><option>Sí, queremos automatizar comunicación con clientes</option><option>En el futuro, no de inmediato</option><option>No es prioridad</option></select>
+      </div>
+      <div class="field"><label>¿Quieren programa de puntos o fidelización?</label>
+        <select name="q7_5"><option value="">— Selecciona —</option><option>Sí, queremos fidelizar clientes</option><option>En el futuro</option><option>No es necesario</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 Operación interna -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">08</span><h3>Operación Interna</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Cuántas personas gestionan los pedidos hoy?</label>
+        <select name="q8_1"><option value="">— Selecciona —</option><option>Solo yo</option><option>2 – 3 personas</option><option>4 – 10 personas</option><option>Más de 10</option></select>
+      </div>
+      <div class="field"><label>¿Necesitan un panel para gestionar pedidos, imprimir guías y marcar envíos?</label>
+        <select name="q8_2"><option value="">— Selecciona —</option><option>Sí, es fundamental</option><option>Deseable pero no urgente</option><option>Lo manejamos desde ML/Amazon hoy</option></select>
+      </div>
+      <div class="field"><label>¿Necesitan reportes de ventas, productos más vendidos, ingresos por canal?</label>
+        <select name="q8_3"><option value="">— Selecciona —</option><option>Sí, necesitamos reportes claros</option><option>Con los básicos es suficiente</option><option>No es prioridad</option></select>
+      </div>
+      <div class="field"><label>¿Tienen sistema de punto de venta físico (POS) que necesite conectarse?<span class="hint">Si tienen tienda física, indiquen qué sistema usan — esto define el alcance de la integración</span></label>
+        <textarea name="q8_4" placeholder="Ej: Sí, usamos Bind ERP en tienda física. / No, solo vendemos en línea. / Estamos pensando abrir tienda física."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 09 Expectativas -->
+  <div class="seccion">
+    <div class="sec-header"><span class="sec-num">09</span><h3>Expectativas y Presupuesto</h3></div>
+    <div class="sec-body">
+      <div class="field"><label>¿Tienen dominio propio (www.sunegocio.com)?</label>
+        <select name="q9_1"><option value="">— Selecciona —</option><option>Sí, ya tenemos dominio</option><option>No, habría que comprarlo</option><option>No lo sé</option></select>
+      </div>
+      <div class="field"><label>¿Tienen fecha objetivo para lanzar la tienda?</label>
+        <input type="text" name="q9_2" placeholder="Ej: En 2 meses, antes de diciembre, sin fecha definida...">
+      </div>
+      <div class="field"><label>¿Han tenido tienda en línea propia antes?<span class="hint">Ej: Shopify, WooCommerce, Wix, Tiendanube...</span></label>
+        <select name="q9_3"><option value="">— Selecciona —</option><option>Sí, con Shopify</option><option>Sí, con WooCommerce</option><option>Sí, con otra plataforma</option><option>No, es nuestra primera tienda propia</option></select>
+      </div>
+      <div class="field"><label>¿Qué plataforma prefieren para la tienda?<span class="hint">Si no lo saben, el consultor puede recomendarles la mejor opción</span></label>
+        <select name="q9_4"><option value="">— Selecciona —</option><option>Shopify (mensualidad, sin servidor)</option><option>WooCommerce (WordPress, más flexible)</option><option>Tiendanube (opción latinoamericana)</option><option>Sin preferencia, lo que recomienden</option></select>
+      </div>
+      <div class="field"><label>¿Cuál es su presupuesto estimado para este proyecto?</label>
+        <select name="q9_5"><option value="">— Prefiero no especificar —</option><option>Menos de $15,000 MXN</option><option>$15,000 – $35,000 MXN</option><option>$35,000 – $70,000 MXN</option><option>Más de $70,000 MXN</option><option>Abierto a propuesta</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="notas-card">
+    <label>📝 Notas o comentarios adicionales (opcional)</label>
+    <textarea name="notas" placeholder="Cualquier información adicional que quieras compartir sobre tu negocio o tus expectativas..."></textarea>
+  </div>
+
+  <button type="submit" class="btn-submit" id="btnSubmit">Enviar diagnóstico →</button>
+  <p class="privacy">Tus respuestas se envían de forma segura directamente al consultor. No se comparten con terceros.</p>
+</form>
+</div>
+
+<div id="estadoCard">
+  <div class="estado-inner">
+    <div class="estado-icon" id="estadoIcon"></div>
+    <h2 id="estadoTitulo"></h2>
+    <p id="estadoMsg"></p>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 Juan Alberto Grijalva Cruz · Monterrey, N.L.</span>
+  <span>E-Commerce · Integraciones · Google Workspace</span>
+</footer>
+
+<script>
+(function(){
+  const p=new URLSearchParams(window.location.search),c=p.get('cliente');
+  if(c){
+    const n=decodeURIComponent(c);
+    document.getElementById('clientBadge').textContent='🛒 '+n;
+    document.title='Diagnóstico E-Commerce · '+n+' · Gritek';
+    const i=document.getElementById('inputEmpresa');
+    i.value=n; i.readOnly=true;
+  }
+})();
+
+const allInputs=document.querySelectorAll('input:not([type=hidden]),textarea,select');
+function upd(){
+  let f=0;
+  allInputs.forEach(e=>{if(e.value&&e.value.trim()!=='')f++;});
+  const p=Math.round((f/allInputs.length)*100);
+  document.getElementById('progressFill').style.width=p+'%';
+  document.getElementById('progressPct').textContent=p+'%';
+}
+allInputs.forEach(e=>{e.addEventListener('input',upd);e.addEventListener('change',upd);});
+upd();
+
+document.getElementById('mainForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('btnSubmit');
+  btn.disabled=true; btn.textContent='Enviando...';
+  const datos={};
+  new FormData(this).forEach((v,k)=>{datos[k]=v;});
+  document.getElementById('formCard').style.display='none';
+  const card=document.getElementById('estadoCard');
+  card.classList.add('visible');
+  document.getElementById('estadoIcon').textContent='⏳';
+  document.getElementById('estadoTitulo').textContent='Enviando respuestas...';
+  document.getElementById('estadoMsg').textContent='Por favor espera un momento.';
+
+  // ⚠️ REEMPLAZA CON TU URL DE GAS
+  const GAS_URL='https://script.google.com/macros/s/AKfycbxw57JmHfvv0e5VafzJBlgTfhRXPKNkncVcDv7QmdhKHNFoxIcM6AcuSAGoMVv63PgOrA/exec';
+
+  try{
+    await fetch(GAS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(datos)});
+    card.classList.add('exito');
+    document.getElementById('estadoIcon').textContent='✅';
+    document.getElementById('estadoTitulo').textContent='¡Diagnóstico enviado!';
+    document.getElementById('estadoMsg').innerHTML='Gracias por tu tiempo.<br>Revisaré tus respuestas y me pondré en contacto contigo a la brevedad.';
+  }catch(err){
+    card.classList.add('error');
+    document.getElementById('estadoIcon').textContent='❌';
+    document.getElementById('estadoTitulo').textContent='Error al enviar';
+    document.getElementById('estadoMsg').textContent='Por favor intenta de nuevo o contacta directamente a jgrijalva@gmail.com';
+  }
+});
+</script>
+</body>
+</html>
