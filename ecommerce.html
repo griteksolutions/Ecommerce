@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnóstico E-Commerce · Gritek Solutions</title>
+<title>Diagnóstico Canal de Venta · Gritek Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
@@ -82,19 +82,19 @@
 <body>
 
 <nav>
-  <a class="nav-logo" href="https://griteksolutions.github.io/erp-pdm">
+  <a class="nav-logo" href="https://griteksolutions.github.io/ecommerce">
     <span></span> Gritek
   </a>
   <div class="nav-links">
     <a href="https://griteksolutions.github.io/#servicios">Servicios</a>
     <a href="https://griteksolutions.github.io/#contacto">Contacto</a>
-    <a href="diagnostico.html" class="nav-cta">Diagnóstico ERP →</a>
+    <a href="ecommerce.html" class="nav-cta">Diagnóstico de canal →</a>
   </div>
 </nav>
 
 <div class="form-hero">
-  <div class="hero-tag" id="clientBadge">Diagnóstico E-Commerce</div>
-  <h1>Tu tienda en línea,<br>tu <em>propio canal</em></h1>
+  <div class="hero-tag" id="clientBadge">Diagnóstico Canal de Venta</div>
+  <h1>Tu propio<br>canal de <em>venta</em></h1>
   <p>Responde este diagnóstico para entender cómo llevar tu operación de Mercado Libre y Amazon a tu propia tienda digital.</p>
 </div>
 
@@ -317,7 +317,7 @@
 
 <footer>
   <span>© 2025 Juan Alberto Grijalva Cruz · Monterrey, N.L.</span>
-  <span>E-Commerce · Integraciones · Google Workspace</span>
+  <span>Tienda Propia · Canal de Venta · Integraciones ML/Amazon</span>
 </footer>
 
 <script>
@@ -325,8 +325,8 @@
   const p=new URLSearchParams(window.location.search),c=p.get('cliente');
   if(c){
     const n=decodeURIComponent(c);
-    document.getElementById('clientBadge').textContent='🛒 '+n;
-    document.title='Diagnóstico E-Commerce · '+n+' · Gritek';
+    document.getElementById('clientBadge').textContent='📋 '+n;
+    document.title='Diagnóstico Canal de Venta · '+n+' · Gritek';
     const i=document.getElementById('inputEmpresa');
     i.value=n; i.readOnly=true;
   }
